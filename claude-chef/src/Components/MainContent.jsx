@@ -1,6 +1,9 @@
+import { useState } from "react"
+
 export default function MainContent()
 {
-    const ingridents = ["Chicken","Oregano","Tomatoes"]
+    const [ingridents,setIngridients] = useState([])
+
     const ingridentsAtHand = ingridents.map((ingredient)=>
     {
         return <li key={ingredient}>{ingredient}</li>
@@ -8,11 +11,10 @@ export default function MainContent()
 
     function handleFormSubmit(event)
     {
-        event.preventDefault()
-        const formData = new FormData(event.currentTarget)
-        const newIngridient = formData.get("ingridient")
-        ingridents.push(newIngridient)
-        console.log(ingridents)
+       event.preventDefault()
+       const formData = new FormData(event.currentTarget)
+       const newIngridient = formData.get("ingridient")
+       setIngridients((prevIngridients)=>[...prevIngridients,newIngridient])
 
     }
 

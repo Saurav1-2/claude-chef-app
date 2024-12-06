@@ -2,21 +2,23 @@ import {useState} from "react"
 
 export default function State()
 {
-   const isGoingOut = false
 
-   const [status,setStatus] = useState(false)
-
+    const [myFavoriteThings, setMyFavoriteThings] = useState([])
+    const allFavoriteThings = ["💦🌹", "😺", "💡🫖", "🔥🧤", "🟤🎁", 
+    "🐴", "🍎🥧", "🚪🔔", "🛷🔔", "🥩🍝"]
+    const thingsElements = myFavoriteThings.map(thing => <p key={thing}>{thing}</p>)
+  
+    function addFavoriteThing() {
+      setMyFavoriteThings((prevFavThings)=>[...prevFavThings,allFavoriteThings[prevFavThings.length]])
    
-
-   function handleClick()
-   {
-    setStatus(prev=>!prev)
-   }
+    }
     
-    return(
-        <main>
-            <h1 className="title">Is state important to konw?</h1>
-            <button onClick={handleClick} className="value">{status?"Yes":"No"}</button>
-        </main>
+    return (
+      <main>
+        <button onClick={addFavoriteThing}>Add item</button>
+        <section aria-live="polite">
+          {thingsElements}
+        </section>
+      </main>
     )
 }
