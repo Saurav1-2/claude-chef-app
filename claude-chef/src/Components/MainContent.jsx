@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useRef,useEffect } from "react"
 import ClaudeRecipe from "./ClaudeRecipe"
 import IngredientsList from "./IngredientsList"
 import { getRecipeFromMistral } from "../ai"
@@ -8,8 +8,14 @@ export default function MainContent()
 
     const [recipe,setRecipe] = useState("")
 
-
+    const recipeSection  = useRef(null)
     
+    useEffect(()=>{
+        if(recipe!=="" && recipeSection.current!==null)
+        {
+            recipeSection.current.scrollIntoView({behavior:"smooth"})
+        }
+    },[recipe])
 
     function addIngredient(formData)
     {
@@ -36,6 +42,7 @@ export default function MainContent()
         <main className="content">
             <form action={addIngredient} className="add-ingridient-form">
                 <input 
+                
                 type="text"
                 placeholder="e.g. oregano" 
                 aria-label="Add ingredient"
@@ -47,7 +54,7 @@ export default function MainContent()
             {
 
             ingridents.length > 0 &&
-             <IngredientsList ingredients = {ingridents} getRecipe = {getRecipe}/>
+             <IngredientsList ingredients = {ingridents} getRecipe = {getRecipe} ref={recipeSection}/>
             }
             {
                 recipe &&
